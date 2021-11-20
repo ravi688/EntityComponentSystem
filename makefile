@@ -101,9 +101,11 @@ TARGET = $(__EXECUTABLE_NAME)
 DEPENDENCY_INCLUDES = $(addsuffix /include, $(__DEPENDENCIES))
 SHARED_DEPENDENCY_INCLUDES = $(addsuffix /include, $(__SHARED_DEPENDENCIES))
 
-INCLUDES= -I.\include $(addprefix -I, $(DEPENDENCY_INCLUDES) $(SHARED_DEPENDENCY_INCLUDES))
+INCLUDES= -I.\include -I.\scripts $(addprefix -I, $(DEPENDENCY_INCLUDES) $(SHARED_DEPENDENCY_INCLUDES))
 SOURCES= $(wildcard source/*.c)
 OBJECTS= $(addsuffix .o, $(basename $(SOURCES)))
+TARGET_SOURCES = $(wildcard scripts/*.c source/main.c)
+TARGET_OBJECTS = $(addsuffix .o, $(basename $(TARGET_SOURCES)))
 LIBS = 
 
 #Flags and Defines
@@ -162,9 +164,9 @@ $(TARGET_STATIC_LIB) : PRINT_MESSAGE1 $(filter-out source/main.o, $(OBJECTS)) | 
 	$(ARCHIVER) $(ARCHIVER_FLAGS) $@ $(filter-out $<, $^)
 	@echo [Log] $@ built successfully!
 
-$(TARGET): $(__DEPENDENCY_LIBS) $(__SHARED_DEPENDENCY_LIBS) $(TARGET_STATIC_LIB) source/main.o
+$(TARGET): $(__DEPENDENCY_LIBS) $(__SHARED_DEPENDENCY_LIBS) $(TARGET_STATIC_LIB) $(TARGET_OBJECTS)
 	@echo [Log] Linking $@ ...
-	$(COMPILER) $(COMPILER_FLAGS) source/main.o $(LIBS) \
+	$(COMPILER) $(COMPILER_FLAGS) $(TARGET_OBJECTS) $(LIBS) \
 	$(addprefix -L, $(dir $(TARGET_STATIC_LIB) $(__DEPENDENCY_LIBS) $(__SHARED_DEPENDENCY_LIBS))) \
 	$(addprefix -l:, $(notdir $(TARGET_STATIC_LIB) $(__DEPENDENCY_LIBS) $(__SHARED_DEPENDENCY_LIBS))) \
 	-o $@
@@ -175,6 +177,7 @@ bin-clean:
 	del $(__EXECUTABLE_NAME)
 	del $(subst /,\, $(TARGET_STATIC_LIB))
 	rmdir $(subst /,\, $(TARGET_STATIC_LIB_DIR))
+	del $(subst /,\, $(TARGET_OBJECTS))
 	@echo [Log] Binaries cleaned successfully!
 	$(MAKE) --directory=./dependencies/BufferLib clean
 	$(MAKE) --directory=./dependencies/BufferLib/dependencies/CallTrace clean
