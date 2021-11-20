@@ -1,9 +1,10 @@
 
 #include <stdio.h>
-#include <example.h>
+#include <ecs/assert.h>
+#include <calltrace/calltrace.h>
 
 int main(int argc, char** argv)
 {
-	function();
+	log_msg("Hello ECS!\n");
 	return 0;
 }

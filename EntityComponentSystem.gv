@@ -1,0 +1,9 @@
+#pragma once
+
+digraph EntityComponentSystem
+{
+	#define digraph subgraph
+	#include<BufferLib.gv>
+	#undef digraph 
+	BufferLib -> EntityComponentSystem; 
+}
