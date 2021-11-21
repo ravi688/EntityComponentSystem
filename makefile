@@ -15,9 +15,9 @@ PROJECT_NAME = EntityComponentSystem
 STATIC_LIB_NAME = ecs.a
 DYNAMIC_LIB_NAME = #ecs.dll
 EXECUTABLE_NAME = main.exe
-DEPENDENCIES = BufferLib BufferLib/dependencies/CallTrace
-DEPENDENCY_LIBS = BufferLib/lib/bufferlib.a BufferLib/dependencies/CallTrace/lib/calltrace.a
-DEPENDENCIES_DIR = ./dependencies
+DEPENDENCIES = BufferLib ../dependencies/SafeMemory/shared-dependencies/CallTrace
+DEPENDENCY_LIBS = BufferLib/lib/bufferlib.a ../dependencies/SafeMemory/shared-dependencies/CallTrace/lib/calltrace.a
+DEPENDENCIES_DIR = ../../../shared-dependencies
 SHARED_DEPENDENCIES = #CallTrace
 SHARED_DEPENDENCY_LIBS = #CallTrace/lib/calltrace.a
 SHARED_DEPENDENCIES_DIR = ./shared-dependencies
@@ -179,8 +179,8 @@ bin-clean:
 	rmdir $(subst /,\, $(TARGET_STATIC_LIB_DIR))
 	del $(subst /,\, $(TARGET_OBJECTS))
 	@echo [Log] Binaries cleaned successfully!
-	$(MAKE) --directory=./dependencies/BufferLib clean
-	$(MAKE) --directory=./dependencies/BufferLib/dependencies/CallTrace clean
+	$(MAKE) --directory=../../../shared-dependencies/BufferLib clean
+	$(MAKE) --directory=../../../shared-dependencies/../dependencies/SafeMemory/shared-dependencies/CallTrace clean
 # 	$(MAKE) --directory=./dependencies/HPML clean
 # 	$(MAKE) --directory=../../shared-dependencies/BufferLib clean
 #  	$(MAKE) --directory=./dependencies/tgc clean
