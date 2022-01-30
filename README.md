@@ -1,2 +1,3 @@
-# TemplateRepository
-This repository contains template for a project in C language
+# EntityComponentSystem
+
+It is a very small library for managing entities and their behaviours (components)
