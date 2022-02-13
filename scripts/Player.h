@@ -2,7 +2,7 @@
 
 #include <ecs/component.h>
 
-#define Player_TYPE_ID CREATE_COMPONENT_ID(1)
+static const u64 TYPE_ID(Player) = CREATE_COMPONENT_ID(1);
 
 enum player_state_t
 {

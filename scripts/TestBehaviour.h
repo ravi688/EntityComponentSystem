@@ -3,7 +3,7 @@
 
 #include <ecs/component.h>
 
-#define TestBehaviour_TYPE_ID CREATE_COMPONENT_ID(10)
+static const u64 TYPE_ID(TestBehaviour) = CREATE_COMPONENT_ID(10);
 
 
 typedef struct TestBehaviour

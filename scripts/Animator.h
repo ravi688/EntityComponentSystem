@@ -2,7 +2,7 @@
 
 #include <ecs/component.h>
 
-#define Animator_TYPE_ID CREATE_COMPONENT_ID(2)
+static const u64 TYPE_ID(Animator) = CREATE_COMPONENT_ID(2);
 
 typedef struct Animator
 {

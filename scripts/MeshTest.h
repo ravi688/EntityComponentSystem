@@ -2,7 +2,7 @@
 
 #include <engine/engine.h>
 
-#define MeshTest_TYPE_ID CREATE_COMPONENT_ID(7)
+static const u64 TYPE_ID(MeshTest) = CREATE_COMPONENT_ID(7);
 
 
 typedef struct MeshTest

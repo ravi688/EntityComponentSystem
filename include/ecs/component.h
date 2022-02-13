@@ -5,9 +5,11 @@
 
 #define COMPONENT(component) ((component_t*)(component))
 #define IS_COMPONENT(component) (((component)->id & Component_TYPE_ID) == Component_TYPE_ID)
-#define Component_TYPE_ID ((u64)(2))
+#define TYPE_ID(type) type##_TYPE_ID
 
-#define CREATE_COMPONENT_ID(id) ((u64)(Component_TYPE_ID | (((u64)(id)) << 32)))
+static const u64 TYPE_ID(Component) = (2ULL);
+
+#define CREATE_COMPONENT_ID(id) ((u64)(TYPE_ID(Component) | (((u64)(id)) << 32)))
 
 #define DERIVE_FROM_COMPONENT component_t component
 

@@ -2,7 +2,7 @@
 
 #include <ecs/component.h>
 
-#define Ammo_TYPE_ID CREATE_COMPONENT_ID(3)
+static const u64 TYPE_ID(Ammo) = CREATE_COMPONENT_ID(3);
 
 typedef struct Ammo
 {
