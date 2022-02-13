@@ -104,7 +104,7 @@ DEPENDENCY_INCLUDES = $(addsuffix /include, $(__DEPENDENCIES))
 SHARED_DEPENDENCY_INCLUDES = $(addsuffix /include, $(__SHARED_DEPENDENCIES))
 
 INCLUDES= -I.\include $(EXTERNAL_INCLUDES) $(addprefix -I, $(DEPENDENCY_INCLUDES) $(SHARED_DEPENDENCY_INCLUDES))
-SOURCES= $(wildcard source/*.c scripts/*.c)
+SOURCES= $(wildcard source/*.c)
 OBJECTS= $(addsuffix .o, $(basename $(SOURCES)))
 LIBS = 
 
