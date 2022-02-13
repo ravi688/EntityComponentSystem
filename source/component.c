@@ -64,6 +64,7 @@ ECS_API component_t* __component_new(object_t* object, uint32_t size_of_componen
 	component->m_OnLateUpdate= NULL;
 	component->m_OnPostRender= NULL;
 	component->m_OnPreRender= NULL;
+	component->m_OnRender = NULL;
 	log_msg("component_t of type_id %d is Instantiated", type_id);
 	return component;
 }
