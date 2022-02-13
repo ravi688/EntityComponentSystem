@@ -97,6 +97,35 @@ ECS_API void object_call_on_pre_render(object_t* object)
 	}
 	LIST_BIND(list);
 }
+ECS_API void object_call_on_render(object_t* object)
+{
+	if(!object_is_active(object))
+		return;
+
+	LIST() list = LIST_GET_BINDED();
+	if(object->components != NULL)
+	{
+		//loop through each component
+		LIST_BIND(object->components); 
+		component_t* component;
+		for(u64 i = 0; i < LIST_GET_COUNT(); i++)
+		{
+			LIST_GET(i, &component); 
+			if(component_is_enabled(component) && (component->m_OnRender != NULL))
+					component->m_OnRender(component);
+			LIST_BIND(object->components);
+		}
+	}
+
+	if(object->siblings != NULL)
+	{
+		LIST_BIND(object->siblings);
+		u64 sibling_count = LIST_GET_COUNT();
+		for(u64 i = 0; i < sibling_count; i++)
+			object_call_on_render(*LIST_GET_PTR(object_t*, i));
+	}
+	LIST_BIND(list);
+}
 ECS_API void object_call_on_post_render(object_t* object)
 {
 	if(!object_is_active(object))
