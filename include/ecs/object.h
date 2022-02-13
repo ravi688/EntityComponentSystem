@@ -49,6 +49,7 @@ if(!IS_OBJECT(object))\
 ECS_API void object_call_awake(object_t* object);
 ECS_API void object_call_start(object_t* object);
 ECS_API void object_call_on_pre_render(object_t* object);
+ECS_API void object_call_on_render(object_t* object);
 ECS_API void object_call_on_post_render(object_t* object);
 ECS_API void object_call_late_update(object_t* object);
 ECS_API void object_call_update(object_t* object);

@@ -18,6 +18,7 @@ static const u64 TYPE_ID(Component) = (2ULL);
 #define BindOnUpdate(type) COMPONENT(this)->m_OnUpdate = COMPONENT_CALLBACK(type##_OnUpdate)
 #define BindOnLateUpdate(type) COMPONENT(this)->m_OnLateUpdate = COMPONENT_CALLBACK(type##_OnLateUpdate)
 #define BindOnPreRender(type) COMPONENT(this)->m_OnPreRender =  COMPONENT_CALLBACK(type##_OnPreRender)
+#define BindOnRender(type) COMPONENT(this)->m_OnRender = COMPONENT_CALLBACK(type##_OnRender)
 #define BindOnPostRender(type) COMPONENT(this)->m_OnPostRender = COMPONENT_CALLBACK(type##_OnPostRender)
 #define BindOnDestroy(type) COMPONENT(this)->m_OnDestroy = COMPONENT_CALLBACK(type##_OnDestroy)
 
@@ -63,6 +64,7 @@ static const u64 TYPE_ID(Component) = (2ULL);
 #define OnAwake(component_type)  component_type##_OnAwake(component_type* this)
 #define OnPostRender(component_type) component_type##_OnPostRender(component_type* this)
 #define OnPreRender(component_type) component_type##_OnPreRender(component_type* this)
+#define OnRender(component_type) component_type##_OnRender(component_type* this)
 
 //component_t.id specification
 //
@@ -89,6 +91,7 @@ typedef struct component_t
 	component_callback_t m_OnLateUpdate;
 	component_callback_t m_OnPostRender;
 	component_callback_t m_OnPreRender;
+	component_callback_t m_OnRender;
 } component_t; 	//holds the component data
 
 #ifdef __cplusplus
