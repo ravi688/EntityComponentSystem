@@ -2,7 +2,7 @@
 
 #include <ecs/component.h>
 
-#define Circle_TYPE_ID CREATE_COMPONENT_ID(9)
+static const u64 TYPE_ID(Circle) = CREATE_COMPONENT_ID(9);
 
 typedef struct Circle
 {

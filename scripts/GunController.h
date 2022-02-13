@@ -2,7 +2,7 @@
 
 #include <ecs/component.h>
 
-#define GunController_TYPE_ID CREATE_COMPONENT_ID(4)
+static const u64 TYPE_ID(GunController) = CREATE_COMPONENT_ID(4);
 
 typedef struct GunController
 {

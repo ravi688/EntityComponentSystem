@@ -3,8 +3,7 @@
 
 #include <ecs/component.h>
 
-
-#define Square_TYPE_ID CREATE_COMPONENT_ID(8)
+static const u64 TYPE_ID(Square) = CREATE_COMPONENT_ID(8);
 
 typedef struct Square
 {
