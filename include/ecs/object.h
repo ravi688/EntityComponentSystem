@@ -2,7 +2,7 @@
 
 #include <ecs/defines.h>
 #include <ecs/component.h>
-#include <buffer.h>
+#include <bufferlib/buffer.h>
 
 #define Object_TYPE_ID ((u64)(1))
 
@@ -41,16 +41,25 @@ if(!IS_OBJECT(object))\
 	log_err("Passed object's type_id %d is not of Object_TYPE_ID, object's name \"%s\"", object->id, object->name);\
 	return return_value;\
 }
-void object_call_awake(object_t* object);
-void object_call_start(object_t* object);
-void object_call_on_pre_render(object_t* object);
-void object_call_on_post_render(object_t* object);
-void object_call_late_update(object_t* object);
-void object_call_update(object_t* object);
-object_t* object_new(const char* name);
-void object_destroy(object_t* object);
-void object_set_parent(object_t* this, object_t* parent);
-void object_unparent(object_t* this);
-void object_set_active(object_t* this, bool value);
-component_t* __object_attach_component(object_t* object, u64 sizeof_of_component, u64 type_id);
-component_t* __object_get_component(object_t* object, u64 type_id);
+
+#ifdef __cplusplus
+	extern "C" {
+#endif // __cplusplus
+
+ECS_API void object_call_awake(object_t* object);
+ECS_API void object_call_start(object_t* object);
+ECS_API void object_call_on_pre_render(object_t* object);
+ECS_API void object_call_on_post_render(object_t* object);
+ECS_API void object_call_late_update(object_t* object);
+ECS_API void object_call_update(object_t* object);
+ECS_API object_t* object_create(const char* name);
+ECS_API void object_destroy(object_t* object);
+ECS_API void object_set_parent(object_t* this, object_t* parent);
+ECS_API void object_unparent(object_t* this);
+ECS_API void object_set_active(object_t* this, bool value);
+ECS_API component_t* __object_attach_component(object_t* object, u64 sizeof_of_component, u64 type_id);
+ECS_API component_t* __object_get_component(object_t* object, u64 type_id);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus

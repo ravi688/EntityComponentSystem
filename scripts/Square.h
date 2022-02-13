@@ -17,5 +17,3 @@ typedef struct Square
 	// material_t* material;
 } Square;
 
-
-component_declare_callbacks(Square);

@@ -17,5 +17,3 @@ typedef struct Circle
 	// mesh_t* mesh;
 }Circle; 
 
-
-component_declare_callbacks(Circle);

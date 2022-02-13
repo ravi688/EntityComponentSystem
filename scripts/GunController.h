@@ -10,5 +10,7 @@ typedef struct GunController
 } GunController;
 
 
-component_declare_callbacks(GunController);
-
+ECS_API void OnInstantiate(GunController);
+ECS_API void OnDestroy(GunController);
+ECS_API void OnAwake(GunController);
+ECS_API void OnStart(GunController);

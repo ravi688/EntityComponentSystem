@@ -14,3 +14,12 @@ typedef int16_t s16;
 typedef int32_t s32;
 typedef int64_t s64;
 
+#ifdef BUF_STATIC_LIBRARY
+#	define ECS_API
+#elif BUF_DYNAMIC_LIBRARY
+#	define ECS_API __declspec(dllimport)
+#elif BUILD_DYNAMIC_LIBRARY
+#	define ECS_API __declspec(dllexport)
+#else
+#	define ECS_API
+#endif

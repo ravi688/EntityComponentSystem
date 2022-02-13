@@ -26,15 +26,15 @@
 // OnAwake(MeshTest,
 // 	log_msg("MeshTest script awake is called");
 
-// 	object_t* child = object_new("Square"); 
-// 	object_t* circle = object_new("Circle");
+// 	object_t* child = object_create("Square"); 
+// 	object_t* circle = object_create("Circle");
 // 	object_set_parent(child, COMPONENT(this)->object);
 // 	object_set_parent(circle, COMPONENT(this)->object);
 // 	object_attach_component(child, Square);
 // 	object_attach_component(circle, Circle);
 // 	Square* square_script = object_get_component(child, Square);
 
-// 	object_t* circle2 = object_new("Circle2");
+// 	object_t* circle2 = object_create("Circle2");
 // 	object_set_parent(circle2, COMPONENT(this)->object);
 // 	object_attach_component(circle2, Circle);
 // 	Circle* circle_script = object_get_component(circle2, Circle);

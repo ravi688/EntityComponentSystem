@@ -4,14 +4,14 @@
 
 #define Animator_TYPE_ID CREATE_COMPONENT_ID(2)
 
-typedef struct __Animator Animator;
-
-typedef struct __Animator
+typedef struct Animator
 {
 	DERIVE_FROM_COMPONENT;
 } Animator;
 
 
-component_declare_callbacks(Animator);
-
+ECS_API void OnInstantiate(Animator);
+ECS_API void OnDestroy(Animator);
+ECS_API void OnAwake(Animator);
+ECS_API void OnStart(Animator);
 

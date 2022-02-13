@@ -26,5 +26,8 @@ typedef struct Player
 } Player;
 
 
-component_declare_callbacks(Player);
+ECS_API void OnInstantiate(Player);
+ECS_API void OnDestroy(Player);
+ECS_API void OnAwake(Player);
+ECS_API void OnStart(Player);
 

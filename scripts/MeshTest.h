@@ -19,5 +19,3 @@ typedef struct MeshTest
 } MeshTest;
 
 
-component_declare_callbacks(MeshTest);
-
