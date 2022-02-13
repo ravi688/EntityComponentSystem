@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <ecs/object.h>
 
-OnInstantiate(Player,
+ECS_API void OnInstantiate(Player)
+{
 	BindOnAwake(Player);
 	BindOnStart(Player); 
 	BindOnDestroy(Player);
@@ -16,20 +17,19 @@ OnInstantiate(Player,
 
 	puts("Player component is Instantiated");
 	printf("Player component is Attached to Object \"%s\"\n", COMPONENT(this)->object->name);
-)
+}
 
-OnDestroy(Player,
-
+ECS_API void OnDestroy(Player)
+{
 	puts("Player component is Destroyed");
-)
+}
 
-
-OnAwake(Player,
-
+ECS_API void OnAwake(Player)
+{
 	puts("Player awake is called");
-)
+}
 
-OnStart(Player,
-
+ECS_API void OnStart(Player)
+{
 	puts("Player start is called");
-)
+}

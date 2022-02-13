@@ -6,7 +6,7 @@
 
 static bool object_comparer(void* obj1, void* obj2) { return *((object_t**)obj1) == *((object_t**)obj2); }
 
-void scene_add_object(scene_t* scene, object_t* object)
+ECS_API void scene_add_object(scene_t* scene, object_t* object)
 {
 	ensure_scene_is_not_NULL();
 	ensure_object_is_not_NULL();
@@ -23,12 +23,12 @@ void scene_add_object(scene_t* scene, object_t* object)
 	LIST_BIND(list);
 }
 
-void scene_remove_object(scene_t* scene, object_t* object)
+ECS_API void scene_remove_object(scene_t* scene, object_t* object)
 {
 	log_msg("scene_remove_object not defined\n");
 }
 
-scene_t* scene_new(char* name)
+ECS_API scene_t* scene_create(char* name)
 {
 	scene_t* scene = (scene_t*)malloc(sizeof(scene_t)); 
 	if(name == NULL)
@@ -40,7 +40,7 @@ scene_t* scene_new(char* name)
 	return scene;
 }
 
-void scene_clean(scene_t* scene)
+ECS_API void scene_clean(scene_t* scene)
 {
 	ensure_scene_is_not_NULL();
 	if(scene->objects != NULL)
@@ -54,7 +54,7 @@ void scene_clean(scene_t* scene)
 	log_msg("scene_t \"%s\" is cleaned\n", scene->name);
 }
 
-void scene_destroy(scene_t* scene)
+ECS_API void scene_destroy(scene_t* scene)
 {
 	ensure_scene_is_not_NULL();
 	char name[24];
@@ -73,10 +73,10 @@ void scene_destroy(scene_t* scene)
 	log_msg("scene_t \"%s\" is destroyed\n", name);
 }
 
-object_t* scene_create_object(scene_t* scene, char* name)
+ECS_API object_t* scene_create_object(scene_t* scene, char* name)
 {
 	if(scene == NULL) return NULL;
-	object_t* object = object_new(name);
+	object_t* object = object_create(name);
 	if(scene->objects == NULL)
 		scene->objects = LIST_NEW(object_t*, 1);
 	LIST() list = LIST_GET_BINDED();

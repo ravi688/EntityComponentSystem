@@ -2,26 +2,27 @@
 #include <stdio.h>
 #include <ecs/object.h>
 
-OnInstantiate(Animator,
+ECS_API void OnInstantiate(Animator)
+{
 	BindOnAwake(Animator);
 	BindOnStart(Animator); 
 	BindOnDestroy(Animator);
 	puts("Animator component is Instantiated");
 	printf("Animator component is Attached to Object \"%s\"\n", COMPONENT(this)->object->name);
-)
+}
 
-OnDestroy(Animator,
-
+ECS_API void OnDestroy(Animator)
+{
 	puts("Animator component is Destroyed");
-)
+}
 
 
-OnAwake(Animator,
-
+ECS_API void OnAwake(Animator)
+{
 	puts("Animator awake is called");
-)
+}
 
-OnStart(Animator,
-
+ECS_API void OnStart(Animator)
+{
 	puts("Animator start is called");
-)
+}

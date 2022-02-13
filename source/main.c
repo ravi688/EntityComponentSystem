@@ -14,9 +14,9 @@ int main(int argc, char** argv)
 {
 	log_msg("Hello ECS!\n");
 
-	scene_manager_t* scene_manager = scene_manager_init();
-	scene_t* scene = scene_new("NewScene");
-	object_t* ball = object_new("Ball");
+	scene_manager_t* scene_manager = scene_manager_create();
+	scene_t* scene = scene_create("NewScene");
+	object_t* ball = object_create("Ball");
 	scene_add_object(scene, ball);
 	object_attach_component(ball, Ammo);
 	scene_manager_add_active_scene(scene_manager, scene);

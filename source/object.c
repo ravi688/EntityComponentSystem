@@ -6,7 +6,7 @@
 static bool comparer(void* object1, void* object2) { return *(object_t**)object1 == *(object_t**)object2; }
 
 
-void object_call_awake(object_t* object)
+ECS_API void object_call_awake(object_t* object)
 {
 	LIST() list = LIST_GET_BINDED();
 
@@ -36,7 +36,7 @@ void object_call_awake(object_t* object)
 	LIST_BIND(list);
 }
 
-void object_call_start(object_t* object)
+ECS_API void object_call_start(object_t* object)
 {
 	if(!object_is_active(object))
 		return;
@@ -68,7 +68,7 @@ void object_call_start(object_t* object)
 	}
 	LIST_BIND(list);
 }
-void object_call_on_pre_render(object_t* object)
+ECS_API void object_call_on_pre_render(object_t* object)
 {
 	if(!object_is_active(object))
 		return;
@@ -97,7 +97,7 @@ void object_call_on_pre_render(object_t* object)
 	}
 	LIST_BIND(list);
 }
-void object_call_on_post_render(object_t* object)
+ECS_API void object_call_on_post_render(object_t* object)
 {
 	if(!object_is_active(object))
 		return;
@@ -126,7 +126,7 @@ void object_call_on_post_render(object_t* object)
 	}
 	LIST_BIND(list);
 }
-void object_call_late_update(object_t* object)
+ECS_API void object_call_late_update(object_t* object)
 {
 	if(!object_is_active(object))
 		return;
@@ -155,7 +155,7 @@ void object_call_late_update(object_t* object)
 	LIST_BIND(list);
 }
 
-void object_call_update(object_t* object)
+ECS_API void object_call_update(object_t* object)
 {
 	if(!object_is_active(object))
 		return;
@@ -193,7 +193,7 @@ void object_call_update(object_t* object)
 }
 
 
-void object_set_parent(object_t* object, object_t* parent)
+ECS_API void object_set_parent(object_t* object, object_t* parent)
 {
 	ensure_object_is_not_NULL();
 	ensure_passed_value_is_object();
@@ -225,7 +225,7 @@ void object_set_parent(object_t* object, object_t* parent)
 	log_msg("object_t \"%s\" is now child of object_t \"%s\"\n", object->name, parent->name);
 }
 
-void object_unparent(object_t* object)
+ECS_API void object_unparent(object_t* object)
 {
 	ensure_object_is_not_NULL();
 	ensure_passed_value_is_object();
@@ -253,7 +253,7 @@ void object_unparent(object_t* object)
 	LIST_BIND(list);
 }
 
-void object_destroy(object_t* object)
+ECS_API void object_destroy(object_t* object)
 {
 	ensure_object_is_not_NULL();
 	ensure_passed_value_is_object();
@@ -289,7 +289,7 @@ void object_destroy(object_t* object)
 	log_msg("object_t \"%s\" is destroyed\n", name);
 }
 
-void object_set_active(object_t* object, bool value)
+ECS_API void object_set_active(object_t* object, bool value)
 {
 	ensure_object_is_not_NULL();
 	ensure_passed_value_is_object();
@@ -299,7 +299,7 @@ void object_set_active(object_t* object, bool value)
 		object->boolean_info &= (~OBJECT_ACTIVE);
 }
 
-object_t* object_new(const char* name)
+ECS_API object_t* object_create(const char* name)
 {
 	object_t* object = OBJECT(malloc(sizeof(object_t)));
 	strcpy(object->name, name);
@@ -313,7 +313,7 @@ object_t* object_new(const char* name)
 	return object;	
 }
 
-component_t* __object_attach_component(object_t* object, u64 size_of_component, u64 type_id)
+ECS_API component_t* __object_attach_component(object_t* object, u64 size_of_component, u64 type_id)
 {
 	ensure_object_is_not_NULL(NULL);
 	ensure_passed_value_is_object(NULL);
@@ -327,7 +327,7 @@ component_t* __object_attach_component(object_t* object, u64 size_of_component, 
 	return (void*)component;
 }
 
-component_t* __object_get_component(object_t* object, u64 type_id)
+ECS_API component_t* __object_get_component(object_t* object, u64 type_id)
 {
 	ensure_object_is_not_NULL(NULL);
 	ensure_passed_value_is_object(NULL);

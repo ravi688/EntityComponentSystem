@@ -5,7 +5,7 @@
 #include <calltrace/calltrace.h>
 
 
-void __component_set_enabled(component_t* component, bool value)
+ECS_API void __component_set_enabled(component_t* component, bool value)
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();
@@ -14,7 +14,7 @@ void __component_set_enabled(component_t* component, bool value)
 	else //cancel the bits
 		component->boolean_info &= (~COMPONENT_ENABLED);
 }
-void __component_set_awake_called(component_t* component, bool value)
+ECS_API void __component_set_awake_called(component_t* component, bool value)
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();
@@ -24,7 +24,7 @@ void __component_set_awake_called(component_t* component, bool value)
 		component->boolean_info &= (~COMPONENT_AWAKE_CALLED);
 }
 
-void __component_set_start_called(component_t* component, bool value)
+ECS_API void __component_set_start_called(component_t* component, bool value)
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();
@@ -34,7 +34,7 @@ void __component_set_start_called(component_t* component, bool value)
 		component->boolean_info &= (~COMPONENT_START_CALLED);
 }
 
-component_t* __component_new(object_t* object, uint32_t size_of_component, uint64_t type_id)
+ECS_API component_t* __component_new(object_t* object, uint32_t size_of_component, uint64_t type_id)
 {
 	if((type_id & Component_TYPE_ID) != Component_TYPE_ID)
 	{
@@ -68,33 +68,33 @@ component_t* __component_new(object_t* object, uint32_t size_of_component, uint6
 	return component;
 }
 
-void __component_set_OnDestroy(component_t* component, void (*on_destroy)(component_t*))
+ECS_API void __component_set_OnDestroy(component_t* component, void (*on_destroy)(component_t*))
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();	
 	component->m_OnDestroy = on_destroy;
 }
-void __component_set_OnStart(component_t* component, void (*on_start)(component_t*))
+ECS_API void __component_set_OnStart(component_t* component, void (*on_start)(component_t*))
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();
 	component->m_OnStart = on_start;
 }
-void __component_set_OnUpdate(component_t* component, void (*on_update)(component_t*))
+ECS_API void __component_set_OnUpdate(component_t* component, void (*on_update)(component_t*))
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();
 	component->m_OnUpdate = on_update;
 }
 
-object_t* __component_get_object(component_t* component)
+ECS_API object_t* __component_get_object(component_t* component)
 {
 	ensure_component_is_not_NULL(NULL);
 	ensure_passed_value_is_component(NULL);
 	return component->object;
 }
 
-void __component_destroy(component_t* component)
+ECS_API void __component_destroy(component_t* component)
 {
 	ensure_component_is_not_NULL();
 	ensure_passed_value_is_component();

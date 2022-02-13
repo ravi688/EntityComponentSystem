@@ -32,16 +32,6 @@
 	// COMPONENT(this)->m_OnPostRender = COMPONENT_CALLBACK(type##_OnPostRender); \
 	// COMPONENT(this)->m_OnPreRender = COMPONENT_CALLBACK(type##_OnPreRender)
 
-#define component_declare_callbacks(type)\
-	void type##_OnInstantiate(type* this);\
-	void type##_OnDestroy(type* this);\
-	void type##_OnStart(type* this);\
-	void type##_OnUpdate(type* this);\
-	void type##_OnLateUpdate(type* this);\
-	void type##_OnAwake(type* this);\
-	void type##_OnPostRender(type* this);\
-	void type##_OnPreRender(type* this)
-
 #define component_set_OnDestroy(component, on_destroy) __component_set_OnDestroy(COMPONENT(component), on_destroy)
 #define component_set_OnStart(component, on_start) __component_set_OnStart(COMPONENT(component), on_start)
 #define component_set_OnUpdate(component, on_update) __component_set_OnUpdate(COMPONENT(component), on_update)
@@ -63,22 +53,14 @@
 #define component_set_awake_called(component, boolean) __component_set_awake_called(COMPONENT(component), boolean)
 #define component_set_start_called(component, boolean) __component_set_start_called(COMPONENT(component), boolean)
 
-#define OnInstantiate(component_type, function_definition) void component_type##_OnInstantiate(component_type* this)\
-{\
- 	function_definition \
-}
-
-#define OnDestroy(component_type, function_definition) void component_type##_OnDestroy(component_type* this)\
-{\
-	function_definition\
-}
-
-#define OnStart(component_type, function_definition) void  component_type##_OnStart(component_type* this) { function_definition }
-#define OnUpdate(component_type, function_definition) void  component_type##_OnUpdate(component_type* this) { function_definition }
-#define OnLateUpdate(component_type, function_definition)  void component_type##_OnLateUpdate(component_type* this) { function_definition }
-#define OnAwake(component_type, function_definition) void  component_type##_OnAwake(component_type* this) { function_definition }
-#define OnPostRender(component_type, function_definition) void component_type##_OnPostRender(component_type* this) { function_definition }
-#define OnPreRender(component_type, function_definition) void component_type##_OnPreRender(component_type* this) { function_definition }
+#define OnInstantiate(component_type) component_type##_OnInstantiate(component_type* this)
+#define OnDestroy(component_type) component_type##_OnDestroy(component_type* this)
+#define OnStart(component_type)  component_type##_OnStart(component_type* this)
+#define OnUpdate(component_type)  component_type##_OnUpdate(component_type* this)
+#define OnLateUpdate(component_type)  component_type##_OnLateUpdate(component_type* this)
+#define OnAwake(component_type)  component_type##_OnAwake(component_type* this)
+#define OnPostRender(component_type) component_type##_OnPostRender(component_type* this)
+#define OnPreRender(component_type) component_type##_OnPreRender(component_type* this)
 
 //component_t.id specification
 //
@@ -107,18 +89,21 @@ typedef struct component_t
 	component_callback_t m_OnPreRender;
 } component_t; 	//holds the component data
 
+#ifdef __cplusplus
+	extern "C" {
+#endif // __cplusplus
 
-component_t* __component_new(object_t* object, u32 size_of_component, u64 type_id);;
-object_t* __component_get_object(component_t* component);
-void __component_destroy(component_t* component); /*Note: this will not invoke OnDestroy callback function*/
+ECS_API component_t* __component_new(object_t* object, u32 size_of_component, u64 type_id);;
+ECS_API object_t* __component_get_object(component_t* component);
+ECS_API void __component_destroy(component_t* component); /*Note: this will not invoke OnDestroy callback function*/
 
-void __component_set_enabled(component_t* component, bool value);
-void __component_set_awake_called(component_t* component, bool value);
-void __component_set_start_called(component_t* component, bool value);
+ECS_API void __component_set_enabled(component_t* component, bool value);
+ECS_API void __component_set_awake_called(component_t* component, bool value);
+ECS_API void __component_set_start_called(component_t* component, bool value);
 
-void __component_set_OnDestroy(component_t* component, void (*on_destroy)(component_t*));
-void __component_set_OnStart(component_t* component, void (*on_start)(component_t*));
-void __component_set_OnUpdate(component_t* component, void (*on_update)(component_t*));
+ECS_API void __component_set_OnDestroy(component_t* component, void (*on_destroy)(component_t*));
+ECS_API void __component_set_OnStart(component_t* component, void (*on_start)(component_t*));
+ECS_API void __component_set_OnUpdate(component_t* component, void (*on_update)(component_t*));
 
 #define ensure_component_is_not_NULL(return_value)\
 if(component == NULL)\
@@ -132,3 +117,7 @@ if((component->id & Component_TYPE_ID) != Component_TYPE_ID)\
 	log_err("Passed value of type id %d is not of component type", component->id);\
  	return return_value;\
 }
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus

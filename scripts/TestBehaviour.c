@@ -4,24 +4,26 @@
 #include <ecs/object.h>
 #include <stdio.h>
 
-OnInstantiate(TestBehaviour,
-
+ECS_API void OnInstantiate(TestBehaviour)
+{
 	BindOnStart(TestBehaviour);
 	BindOnDestroy(TestBehaviour);
 	BindOnUpdate(TestBehaviour);
 	puts("TestBehaviour is instantiated");
-)
+}
 
 
-OnStart(TestBehaviour,
+ECS_API void OnStart(TestBehaviour)
+{
 	puts("TestBehaviour::OnStart is called");
-)
+}
 
-
-OnDestroy(TestBehaviour,
+ECS_API void OnDestroy(TestBehaviour)
+{
 	puts("TestBehaviour::OnUpdate is callled");
-)
+}
 
-OnUpdate(TestBehaviour, 
-
-)
+ECS_API void OnUpdate(TestBehaviour)
+{
+	
+}

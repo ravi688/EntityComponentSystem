@@ -2,26 +2,27 @@
 #include <ecs/object.h>
 #include <stdio.h>
 
-OnInstantiate(GunController,
+ECS_API void OnInstantiate(GunController)
+{
 	BindOnAwake(GunController);
 	BindOnStart(GunController); 
 	BindOnDestroy(GunController);
 	puts("GunController component is Instantiated");
 	printf("GunController component is Attached to Object \"%s\"\n", COMPONENT(this)->object->name);
-)
+}
 
-OnDestroy(GunController,
-
+ECS_API void OnDestroy(GunController)
+{
 	puts("GunController component is Destroyed");
-)
+}
 
 
-OnAwake(GunController,
-
+ECS_API void OnAwake(GunController)
+{
 	puts("GunController awake is called");
-)
+}
 
-OnStart(GunController,
-
+ECS_API void OnStart(GunController)
+{
 	puts("GunController start is called");
-)
+}
