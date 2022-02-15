@@ -108,3 +108,41 @@ ECS_API void scene_manager_remove_active_scene(scene_manager_t* scene_manager, s
 	else 
 		log_err("scene_manager->active_scens is NULL\n");	
 }
+
+ECS_API component_t* __scene_manager_find_component_of_type(scene_manager_t* scene_manager, u64 type_id)
+{
+	if(scene_manager->active_scenes != NULL)
+	{
+		LIST() list  = LIST_GET_BINDED();
+		LIST_BIND(scene_manager->active_scenes);
+		u32 scene_count = LIST_GET_COUNT();
+		scene_t* scene;
+		for(u64 i = 0; i < scene_count; i++)
+		{
+			LIST_GET(i, &scene);
+			if(scene->objects != NULL)
+			{
+				
+				LIST_BIND(scene->objects);
+				for(u64 j = 0; j <  LIST_GET_COUNT(); j++)
+				{
+					object_t* object = (*LIST_GET_PTR(object_t*, j));
+					if(object->components != NULL)
+					{
+						LIST_BIND(object->components);
+						for(u32 k = 0; k < LIST_GET_COUNT(); k++)
+						{
+							if((*LIST_GET_PTR(component_t*, k))->id == type_id)
+								return *LIST_GET_PTR(component_t*, k);
+							LIST_BIND(object->components);
+						}
+					}
+					LIST_BIND(scene->objects);
+				}
+				LIST_BIND(scene_manager->active_scenes);
+			}
+		}
+		LIST_BIND(list);	
+	}
+	return NULL;
+}
