@@ -14,13 +14,16 @@
 PROJECT_NAME = EntityComponentSystem
 STATIC_LIB_NAME = ecs.a
 DYNAMIC_LIB_NAME = ecs.dll
-EXECUTABLE_NAME = main.exe
+EXECUTABLE_NAME = main
 EXTERNAL_INCLUDES = -I./scripts
+EXTERNAL_SOURCES = $(wildcard ./scripts/*.c)
+EXTERNAL_LIBS = 
+
 DEPENDENCIES = BufferLib BufferLib/dependencies/CallTrace
 DEPENDENCY_LIBS = BufferLib/lib/bufferlib.a BufferLib/dependencies/CallTrace/lib/calltrace.a
 DEPENDENCIES_DIR = ./dependencies
-SHARED_DEPENDENCIES = #CallTrace
-SHARED_DEPENDENCY_LIBS = #CallTrace/lib/calltrace.a
+SHARED_DEPENDENCIES = 
+SHARED_DEPENDENCY_LIBS = 
 SHARED_DEPENDENCIES_DIR = ./shared-dependencies
 #-------------------------------------------
 
@@ -31,7 +34,11 @@ __DEPENDENCIES = $(addprefix $(DEPENDENCIES_DIR)/, $(DEPENDENCIES))
 __DEPENDENCY_LIBS = $(addprefix $(DEPENDENCIES_DIR)/, $(DEPENDENCY_LIBS))
 __SHARED_DEPENDENCIES = $(addprefix $(SHARED_DEPENDENCIES_DIR)/, $(SHARED_DEPENDENCIES))
 __SHARED_DEPENDENCY_LIBS = $(addprefix $(SHARED_DEPENDENCIES_DIR)/, $(SHARED_DEPENDENCY_LIBS))
+ifdef COMSPEC
 __EXECUTABLE_NAME = $(addsuffix .exe, $(basename $(EXECUTABLE_NAME)))
+else
+__EXECUTABLE_NAME = $(basename $(EXECUTABLE_NAME))
+endif
 .PHONY: all
 .PHONY: init
 all: dgraph release
@@ -103,10 +110,10 @@ TARGET = $(__EXECUTABLE_NAME)
 DEPENDENCY_INCLUDES = $(addsuffix /include, $(__DEPENDENCIES))
 SHARED_DEPENDENCY_INCLUDES = $(addsuffix /include, $(__SHARED_DEPENDENCIES))
 
-INCLUDES= -I.\include $(EXTERNAL_INCLUDES) $(addprefix -I, $(DEPENDENCY_INCLUDES) $(SHARED_DEPENDENCY_INCLUDES))
-SOURCES= $(wildcard source/*.c scripts/*.c)
+INCLUDES= -I./include $(EXTERNAL_INCLUDES) $(addprefix -I, $(DEPENDENCY_INCLUDES) $(SHARED_DEPENDENCY_INCLUDES))
+SOURCES= $(EXTERNAL_SOURCES) $(wildcard source/*.c source/*/*.c)
 OBJECTS= $(addsuffix .o, $(basename $(SOURCES)))
-LIBS = 
+LIBS = $(EXTERNAL_LIBS)
 
 #Flags and Defines
 DEBUG_DEFINES =  -DGLOBAL_DEBUG -DDEBUG -DLOG_DEBUG
@@ -213,25 +220,67 @@ $(TARGET): $(__DEPENDENCY_LIBS) $(__SHARED_DEPENDENCY_LIBS) $(TARGET_STATIC_LIB)
 	-o $@
 	@echo [Log] $(PROJECT_NAME) built successfully!
 
+RM := rm -f
+RM_DIR := rm -rf
+
 bin-clean: 
-	del $(subst /,\, $(OBJECTS))
-	del $(__EXECUTABLE_NAME)
-	del $(subst /,\, $(TARGET_STATIC_LIB))
-	rmdir $(subst /,\, $(TARGET_STATIC_LIB_DIR))
-	del $(subst /,\, $(TARGET_OBJECTS))
+	$(RM) $(OBJECTS)
+	$(RM) $(__EXECUTABLE_NAME)
+	$(RM) $(TARGET_STATIC_LIB)
+	$(RM) $(TARGET_DYNAMIC_LIB)
+	$(RM) $(TARGET_DYNAMIC_IMPORT_LIB)
+	$(RM_DIR) $(TARGET_LIB_DIR)
 	@echo [Log] Binaries cleaned successfully!
 	$(MAKE) --directory=./dependencies/BufferLib clean
 	$(MAKE) --directory=./dependencies/BufferLib/dependencies/CallTrace clean
-# 	$(MAKE) --directory=./dependencies/HPML clean
-# 	$(MAKE) --directory=../../shared-dependencies/BufferLib clean
-#  	$(MAKE) --directory=./dependencies/tgc clean
+
 #-------------------------------------------
 
 
 #-------------------------------------------
 #		Cleaning
 #-------------------------------------------
+
+.PHONY: clean-project-internal
+
+clean-project-internal:
+	$(MAKE) -f $(addsuffix .makefile, $(PROJECT_NAME)) clean
+
 .PHONY: clean
-clean: bin-clean 
+clean: bin-clean clean-project-internal
 	@echo [Log] All cleaned successfully!
 #-------------------------------------------
+
+
+
+.PHONY: build
+.PHONY: build-run
+.PHONY: build-release
+.PHONY: build-debug
+.PHONY: run
+
+.PHONY: build-project-internal-debug
+.PHONY: build-project-internal-release
+
+build-project-internal-debug:
+	$(MAKE) -f $(addsuffix .makefile, $(PROJECT_NAME)) debug
+
+build-project-internal-release:
+	$(MAKE) -f $(addsuffix .makefile, $(PROJECT_NAME)) release
+
+build-release:
+	$(MAKE) build-project-internal-release
+	$(MAKE) lib-static-release
+	$(MAKE) release
+
+build-debug:
+	$(MAKE) build-project-internal-debug
+	$(MAKE) lib-static-debug
+	$(MAKE) debug
+
+build: build-debug
+
+build-run: build
+	$(__EXECUTABLE_NAME)
+
+run: build-run
