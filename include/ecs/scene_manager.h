@@ -26,6 +26,9 @@ ECS_API void scene_manager_remove_active_scene(scene_manager_t* scene_manager, s
 
 ECS_API void scene_manager_for_each_objects_in_all_scenes(scene_manager_t* scene_manager, void (*function)(object_t*));
 
+#define scene_manager_find_component_of_type(scene_manager, type) ((type*)__scene_manager_find_component_of_type(scene_manager, TYPE_ID(type)))
+ECS_API component_t* __scene_manager_find_component_of_type(scene_manager_t* scene_manager, u64 type_id);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

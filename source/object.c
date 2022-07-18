@@ -233,7 +233,7 @@ ECS_API void object_set_parent(object_t* object, object_t* parent)
 	}
 	if(!IS_OBJECT(parent))
 	{
-		log_err("Passed parent value's typeid %d is not of type object_t\n", parent->id);
+		log_err("Passed parent value's typeid %llu is not of type object_t\n", parent->id);
 		return;
 	}
 	
@@ -368,7 +368,7 @@ ECS_API component_t* __object_get_component(object_t* object, u64 type_id)
 	}
 	if((type_id & Component_TYPE_ID) != Component_TYPE_ID)
 	{
-		log_err("Passed type_id %d is not of component type\n", type_id);
+		log_err("Passed type_id %llu is not of component type\n", type_id);
 	 	return NULL;
 	}
 	
@@ -387,6 +387,6 @@ ECS_API component_t* __object_get_component(object_t* object, u64 type_id)
 		}
 	}
 	LIST_BIND(list);
-	log_wrn("Passed component's type_id %d is not found on the object \"%s\"\n", type_id, object->name);
+	log_wrn("Passed component's type_id %llu is not found on the object \"%s\"\n", type_id, object->name);
 	return NULL;
 }

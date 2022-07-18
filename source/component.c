@@ -38,7 +38,7 @@ ECS_API component_t* __component_new(object_t* object, uint32_t size_of_componen
 {
 	if((type_id & Component_TYPE_ID) != Component_TYPE_ID)
 	{
-		log_err("Passed type_id \"%d\" is not of component type\n", type_id);
+		log_err("Passed type_id \"%llu\" is not of component type\n", type_id);
 	 	return NULL;
 	}
 	if(size_of_component < sizeof(component_t))
@@ -64,7 +64,8 @@ ECS_API component_t* __component_new(object_t* object, uint32_t size_of_componen
 	component->m_OnLateUpdate= NULL;
 	component->m_OnPostRender= NULL;
 	component->m_OnPreRender= NULL;
-	log_msg("component_t of type_id %d is Instantiated", type_id);
+	component->m_OnRender = NULL;
+	log_msg("component_t of type_id %llu is Instantiated\n", type_id);
 	return component;
 }
 
